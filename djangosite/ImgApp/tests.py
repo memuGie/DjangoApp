@@ -27,4 +27,4 @@ class StatusTest(TestCase):
         resp = index(request)
 
         self.assertEqual(resp.status_code, 200)
-        self.assertTrue("Proud index page!".encode() in resp.content)
+        self.assertTrue("Proud html index page!".encode() in resp.content)
