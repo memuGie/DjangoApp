@@ -1,3 +1,7 @@
+from unittest.mock import MagicMock
+
+from django.utils import timezone
+from django.core.files import File
 from django.test import TestCase, RequestFactory, Client
 from django.contrib.auth.models import AnonymousUser, User
 
@@ -9,7 +13,7 @@ class StatusTest(TestCase):
 
     def setUp(self):
         self.factory = RequestFactory()
-        self.user = User.objects.create_user(
+        self._user = User.objects.create_user(
             username="Mick", email="mickey@m0ck.com", password="")
 
     def test_index_anonymous(self):
@@ -23,9 +27,25 @@ class StatusTest(TestCase):
 
     def test_index_user(self):
         request = self.factory.get('/index')
-        request.user = self.user
+        request.user = self._user
 
         resp = index(request)
 
         self.assertEqual(resp.status_code, 200)
         self.assertTrue("Proud html index page!".encode() in resp.content)
+
+
+class ModelTests(TestCase):
+    def setUp(self):
+        self._user = User.objects.create_user(
+            username="Mick", email="mickey.mock@mm.ww", password=""
+        )
+        self._photo = Photo.objects.create(
+            name="test photo from Mallorca",
+            upload_date=timezone.now(),
+            owner_ref=self._user,
+            image=MagicMock(spec=File, name="photoMock.jpg")
+        )
+
+    def test_create_photo(self):
+        pass
