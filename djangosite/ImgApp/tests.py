@@ -2,6 +2,7 @@ from django.test import TestCase, RequestFactory, Client
 from django.contrib.auth.models import AnonymousUser, User
 
 from .views import index
+from .models import Photo
 
 
 class StatusTest(TestCase):
