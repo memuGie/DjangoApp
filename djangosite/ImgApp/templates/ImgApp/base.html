@@ -1,0 +1,16 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ImgApp</title>
+</head>
+    <body>
+        {% include 'ImgApp/header.html' %}
+
+        {% block main_content %}
+        {% endblock %}
+
+        {% include 'ImgApp/footer.html' %}
+    </body>
+</html>
