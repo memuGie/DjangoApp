@@ -1,7 +1,7 @@
+import tempfile
 from unittest.mock import MagicMock
 
 from django.utils import timezone
-from django.core.files import File
 from django.test import TestCase, RequestFactory, Client
 from django.contrib.auth.models import AnonymousUser, User
 
@@ -44,7 +44,7 @@ class ModelTests(TestCase):
             name="test photo from Mallorca",
             upload_date=timezone.now(),
             owner_ref=self._user,
-            image=MagicMock(spec=File, name="photoMock.jpg")
+            image=tempfile.NamedTemporaryFile(suffix=".jpg").name
         )
 
     def test_create_photo(self):

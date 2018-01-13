@@ -1,5 +1,7 @@
 # DjangoApp
 
+0. Would be best if you went through all the below points after installing the newest Pycharm IDE version
+
 ====== CONFIGURE PYTHON AND DJANGO ======
 1. Install python3 interpreter or set the virtualenv python interpreter to inherit from python 3
   + File/Settings/Project:ToDOApp/ProjectInterpreter// GearWheel Icon -> Create VirtualEnv
@@ -10,3 +12,7 @@
 3. Add UnitTests with xml-reporting:
   + install xml-reporting package:
     - File/Settings/Project:ToDoApp/Project Interpreter/'Plus icon'/unittest-xml-reporting/ Install Package
+
+====== GRAPHIC LIBRARY ======
+4. + install Pillow:
+    - File/Settings/Project:ToDoApp/Project Interpreter/'Plus icon'/Pillow/ Install Package
