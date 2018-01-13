@@ -4,12 +4,11 @@
     <h1>User Photos</h1><br>
     {% if user_photos %}
         {% for user_photo in user_photos %}
-            <div>
-                <h2>{{user_photo.name}}</h2>
+            <div align="center">
+                <h2>{{user_photo.description}}</h2>
                 <h3>{{user_photo.upload_date}}</h3>
                 <div>
-                    {{user_photo.image.url}}
-                    <img src="{{user_photo.image.url}}" />
+                    <img src="{{user_photo.image.url}}" width="500px" height="500px"/>
                 </div>
                 <hr>
             </div>

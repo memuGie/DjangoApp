@@ -158,6 +158,5 @@ TEST_OUTPUT_VERBOSE = True
 TEST_OUTPUT_DESCRIPTIONS = True
 TEST_OUTPUT_DIR = 'test_reports'
 
-MEDIA_ROOT = os.path.join(BASE_DIR, "ImgApp/media")
-
 MEDIA_URL = "/media/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "ImgApp/media")
