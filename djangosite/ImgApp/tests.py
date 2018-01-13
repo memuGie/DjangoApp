@@ -1,8 +1,7 @@
 import tempfile
-from unittest.mock import MagicMock
 
 from django.utils import timezone
-from django.test import TestCase, RequestFactory, Client
+from django.test import TestCase, RequestFactory
 from django.contrib.auth.models import AnonymousUser, User
 
 from .views import index
