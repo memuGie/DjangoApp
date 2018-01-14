@@ -11,6 +11,7 @@ logger = CustomLogger.get_instance()
 
 
 def index(request):
+    from .lib.visionapi import get_image_info
     if not request.user.is_authenticated:
         return HttpResponse("""Please <a href="login">login</a>...""")
     if request.method == "POST":
@@ -19,7 +20,8 @@ def index(request):
     user_photos = Photo.objects.filter(
         owner_ref=User.objects.get(username=request.user)).order_by("upload_date").reverse()
     form = ImageUploadingForm()
-    context = {'user_photos': user_photos, 'form': form}
+    image_info = get_image_info("fake_img_url")
+    context = {'user_photos': user_photos, 'form': form, 'image_info': image_info}
 
     return render(request, "ImgApp/index.html", context)
 
