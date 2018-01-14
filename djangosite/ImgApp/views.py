@@ -11,7 +11,10 @@ logger = CustomLogger.get_instance()
 
 
 def index(request):
+    import os
+    from django.conf import settings
     from .lib.visionapi import get_image_info
+
     if not request.user.is_authenticated:
         return HttpResponse("""Please <a href="login">login</a>...""")
     if request.method == "POST":
@@ -20,7 +23,16 @@ def index(request):
     user_photos = Photo.objects.filter(
         owner_ref=User.objects.get(username=request.user)).order_by("upload_date").reverse()
     form = ImageUploadingForm()
-    image_info = get_image_info("fake_img_url")
+    image_info = ""
+    if user_photos:
+        print(settings.BASE_DIR)
+        print(settings.MEDIA_ROOT)
+        print(os.path.dirname(settings.MEDIA_ROOT))
+        print(os.path.join(os.path.dirname(settings.MEDIA_ROOT), user_photos[0].image.url[1:]))
+        print(user_photos[0].image.url)
+
+        image_info = get_image_info(
+            os.path.join(os.path.dirname(settings.MEDIA_ROOT), user_photos[0].image.url[1:]))
     context = {'user_photos': user_photos, 'form': form, 'image_info': image_info}
 
     return render(request, "ImgApp/index.html", context)
