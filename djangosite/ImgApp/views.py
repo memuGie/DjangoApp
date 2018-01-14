@@ -17,7 +17,7 @@ def index(request):
         _handle_file_upload(request)
     logger.info("User %s has logged in" % request.user)
     user_photos = Photo.objects.filter(
-        owner_ref=User.objects.get(username=request.user)).order_by("upload_date")
+        owner_ref=User.objects.get(username=request.user)).order_by("upload_date").reverse()
     form = ImageUploadingForm()
     context = {'user_photos': user_photos, 'form': form}
 
