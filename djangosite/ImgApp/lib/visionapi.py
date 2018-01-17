@@ -3,6 +3,10 @@
 import base64
 import requests
 
+from ..app_logging.custom_logger import CustomLogger
+
+logger = CustomLogger.get_instance()
+
 headers = {
     # Request headers.
     'Content-Type': 'application/octet-stream',
@@ -21,11 +25,11 @@ params = {
 }
 
 
-def get_image_info(image_url, logger=None):
+def get_image_info(image_url):
     import json
 
-    image = open("%s" % image_url, 'rb').read()  # Read image file in binary mode
     try:
+        image = open("%s" % image_url, 'rb').read()  # Read image file in binary mode
         # NOTE: You must use the same location in your REST call as you used to obtain your subscription keys.
         #   For example, if you obtained your subscription keys from westus, replace "westcentralus" in the
         #   URL below with "westus".
@@ -34,7 +38,7 @@ def get_image_info(image_url, logger=None):
                                  params=params,
                                  data=image)
         data = response.json()
-        # print(data)
+        logger.debug(data)
         return json.dumps(data)
     except:
         import traceback
