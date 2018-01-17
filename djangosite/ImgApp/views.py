@@ -63,10 +63,18 @@ def _apply_face_rectangles_pillow(img_url, img_info):
     if "faces" in json_dict.keys():
         for face in json_dict['faces']:
             try:
-                draw.rectangle([(face['faceRectangle']['left'], face['faceRectangle']['top']),
-                                (face['faceRectangle']['left'] + face['faceRectangle']['width'],
-                               face['faceRectangle']['top'] + face['faceRectangle']['height'])],
-                               outline="green", fill=None)
+                draw.rectangle(
+                    [
+                        (
+                            face['faceRectangle']['left'],
+                            face['faceRectangle']['top']
+                        ),
+                        (
+                            face['faceRectangle']['left'] + face['faceRectangle']['width'],
+                            face['faceRectangle']['top'] + face['faceRectangle']['height']
+                        )
+                    ],
+                    outline="green", fill=None)
             except:
                 logger.error(traceback.format_exc())
                 continue
