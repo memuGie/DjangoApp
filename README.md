@@ -21,7 +21,3 @@
 5. Get your API key from: https://azure.microsoft.com/en-us/try/cognitive-services/?api=face-api
   + No CreditCard required, 30days Trial available after e.g. GitHub account synchronisation
   + Replace ImgApp/lib/visionapi.py's subscription_key variable with your key
-
-====== FACE RECTANGLES DRAWING ======
-6. + install matplotlib:
-    - File/Settings/Project:ToDoApp/Project Interpreter/'Plus icon'/matplotlib/ Install Package

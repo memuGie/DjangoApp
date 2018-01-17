@@ -46,38 +46,27 @@ def _query_image_info(img_url):
     logger.debug("Getting info for image: %s" % img_url)
     image_info = get_image_info(img_url)
     try:
-        _apply_face_rectangles(img_url, image_info)
+        _apply_face_rectangles_pillow(img_url, image_info)
     except:
         logger.warning("Unable to mark faces on the image: %s\n%s" % (img_url, traceback.format_exc()))
     return image_info
 
 
-def _apply_face_rectangles(img_url, img_info):
-    import matplotlib.pyplot as plt
-    import matplotlib.patches as patches
-    from PIL import Image
-    import numpy as np
+def _apply_face_rectangles_pillow(img_url, img_info):
     import json
-    import time
+    from PIL import Image, ImageDraw
 
-    im = np.array(Image.open(img_url), dtype=np.uint8)
-    # Create figure and axes
-    fig, ax = plt.subplots(1)
+    im = Image.open(img_url)
+    draw = ImageDraw.Draw(im)
 
-    # Display the image
-    ax.imshow(im)
     json_dict = json.loads(img_info)
     if "faces" in json_dict.keys():
         for face in json_dict['faces']:
             try:
-                # Create a Rectangle patch
-                rect = patches.Rectangle(
-                    (face['faceRectangle']['left'], face['faceRectangle']['top']),
-                    face['faceRectangle']['width'],
-                    face['faceRectangle']['height'],
-                    linewidth=1, edgecolor='g', facecolor='none')
-                ax.add_patch(rect)
-                time.sleep(1)
+                draw.rectangle([(face['faceRectangle']['left'], face['faceRectangle']['top']),
+                                (face['faceRectangle']['left'] + face['faceRectangle']['width'],
+                               face['faceRectangle']['top'] + face['faceRectangle']['height'])],
+                               outline="green", fill=None)
             except:
                 logger.error(traceback.format_exc())
                 continue
@@ -85,7 +74,4 @@ def _apply_face_rectangles(img_url, img_info):
             # Add the patch to the Axes
             # ax.set_axis_off()
             filename, extension = os.path.splitext(img_url)
-            plt.savefig(filename + "-detail" + extension,
-                        bbox_inches='tight',
-                        pad_inches=0,
-                        dpi=600)
+            im.save(filename + "-detail" + extension)
