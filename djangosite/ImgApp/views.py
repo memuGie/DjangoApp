@@ -1,10 +1,12 @@
-from .app_logging.custom_logger import CustomLogger
+import os
+import traceback
 
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 
 from .models import Photo, User
 from .forms import ImageUploadingForm
+from .app_logging.custom_logger import CustomLogger
 
 #TODO: fix Django logging in order not to use the CustomLogger -> settings.py
 logger = CustomLogger.get_instance()
@@ -27,7 +29,6 @@ def index(request):
 
 
 def _handle_file_upload(request):
-    import os
     from django.conf import settings
 
     upload_form = ImageUploadingForm(request.POST, request.FILES)
@@ -44,4 +45,47 @@ def _query_image_info(img_url):
 
     logger.debug("Getting info for image: %s" % img_url)
     image_info = get_image_info(img_url)
+    try:
+        _apply_face_rectangles(img_url, image_info)
+    except:
+        logger.warning("Unable to mark faces on the image: %s\n%s" % (img_url, traceback.format_exc()))
     return image_info
+
+
+def _apply_face_rectangles(img_url, img_info):
+    import matplotlib.pyplot as plt
+    import matplotlib.patches as patches
+    from PIL import Image
+    import numpy as np
+    import json
+    import time
+
+    im = np.array(Image.open(img_url), dtype=np.uint8)
+    # Create figure and axes
+    fig, ax = plt.subplots(1)
+
+    # Display the image
+    ax.imshow(im)
+    json_dict = json.loads(img_info)
+    if "faces" in json_dict.keys():
+        for face in json_dict['faces']:
+            try:
+                # Create a Rectangle patch
+                rect = patches.Rectangle(
+                    (face['faceRectangle']['left'], face['faceRectangle']['top']),
+                    face['faceRectangle']['width'],
+                    face['faceRectangle']['height'],
+                    linewidth=1, edgecolor='g', facecolor='none')
+                ax.add_patch(rect)
+                time.sleep(1)
+            except:
+                logger.error(traceback.format_exc())
+                continue
+        else:
+            # Add the patch to the Axes
+            # ax.set_axis_off()
+            filename, extension = os.path.splitext(img_url)
+            plt.savefig(filename + "-detail" + extension,
+                        bbox_inches='tight',
+                        pad_inches=0,
+                        dpi=600)
