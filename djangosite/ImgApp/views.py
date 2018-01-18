@@ -2,11 +2,11 @@ import os
 import traceback
 
 from django.shortcuts import render
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse
 
 from .models import Photo, User
 from .forms import ImageUploadingForm
-from .app_logging.custom_logger import CustomLogger
+from .lib.app_logging.custom_logger import CustomLogger
 
 #TODO: fix Django logging in order not to use the CustomLogger -> settings.py
 logger = CustomLogger.get_instance()

@@ -1,9 +1,8 @@
 # source: https://docs.microsoft.com/en-us/azure/cognitive-services/computer-vision/quickstarts/python
 
-import base64
 import requests
 
-from ..app_logging.custom_logger import CustomLogger
+from .app_logging.custom_logger import CustomLogger
 
 logger = CustomLogger.get_instance()
 
