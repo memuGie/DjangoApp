@@ -4,7 +4,7 @@
 
 ====== CONFIGURE PYTHON AND DJANGO ======
 1. Install python3 interpreter or set the virtualenv python interpreter to inherit from python 3
-  + File/Settings/Project:ToDOApp/ProjectInterpreter// GearWheel Icon -> Create VirtualEnv
+  + File/Settings/Project:ImgApp/ProjectInterpreter// GearWheel Icon -> Create VirtualEnv
 2. In Pycharm Add Django to the packages list, then hit Install Package or install Django directly on your server
   + after this process is complete, go to Terminal in PyCharm or your server's terminal and type: django-admin --version
 
@@ -16,3 +16,8 @@
 ====== GRAPHIC LIBRARY ======
 4. + install Pillow:
     - File/Settings/Project:ToDoApp/Project Interpreter/'Plus icon'/Pillow/ Install Package
+
+====== Vision API ======
+5. Get your API key from: https://azure.microsoft.com/en-us/try/cognitive-services/?api=face-api
+  + No CreditCard required, 30days Trial available after e.g. GitHub account synchronisation
+  + Replace ImgApp/lib/visionapi.py's subscription_key variable with your key

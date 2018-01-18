@@ -4,6 +4,9 @@
         <h2>Upload your picture...</h2>
         {% include 'ImgApp/upload.html' %}
     </div>
+    {% if image_info %}
+        {{image_info}}
+    {% endif %}
     <hr>
     <h1>User Photos</h1><br>
     {% if user_photos %}
@@ -12,6 +15,7 @@
                 <h2>{{user_photo.description}}</h2>
                 <h3>{{user_photo.upload_date}}</h3>
                 <div>
+                    {{user_photo.image.url}}
                     <img src="{{user_photo.image.url}}" width="500px" height="500px"/>
                 </div>
                 <hr>
