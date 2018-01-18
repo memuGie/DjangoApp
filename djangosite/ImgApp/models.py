@@ -9,3 +9,23 @@ class Photo(models.Model):
     owner_ref = models.ForeignKey(
         User, default=User.objects.get(username="root").pk, on_delete=models.DO_NOTHING)
     image = models.ImageField(upload_to="app_photos")
+
+
+class PhotoInfo(models.Model):
+    caption = models.CharField(max_length=200)
+    tags = models.TextField()
+    raw_json = models.TextField()
+    width = models.IntegerField()
+    height = models.IntegerField()
+    format = models.CharField(max_length=10)
+    photo_ref = models.OneToOneField(Photo, on_delete=models.CASCADE)
+
+
+class Face(models.Model):
+    age = models.IntegerField()
+    gender = models.CharField(max_length=10)
+    top = models.IntegerField()
+    left = models.IntegerField()
+    width = models.IntegerField()
+    height = models.IntegerField()
+    photo_info_ref = models.ForeignKey(PhotoInfo, on_delete=models.CASCADE, null=True, default=None)
