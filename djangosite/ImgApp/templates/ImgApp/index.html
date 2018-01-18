@@ -15,8 +15,9 @@
                 <h2>{{user_photo.description}}</h2>
                 <h3>{{user_photo.upload_date}}</h3>
                 <div>
-                    {{user_photo.image.url}}
-                    <img src="{{user_photo.image.url}}" width="500px" height="500px"/>
+                    <a href={% url "imgapp:detail" user_photo.id %}>
+                        <img src="{{user_photo.image.url}}" width="500px" height="500px"/>
+                    </a>
                 </div>
                 <hr>
             </div>

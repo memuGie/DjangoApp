@@ -29,6 +29,10 @@ def index(request):
     return render(request, "ImgApp/index.html", context)
 
 
+def photo_detail(request, user_photo_id):
+    return HttpResponse("Detail view for photo %s" % user_photo_id)
+
+
 def _handle_file_upload(request):
     from django.conf import settings
 
