@@ -1,10 +1,11 @@
 import os
+import json
 import traceback
 
 from django.shortcuts import render
 from django.http import HttpResponse
 
-from .models import Photo, User
+from .models import Photo, User, PhotoInfo, Face
 from .forms import ImageUploadingForm
 from .lib.app_logging.custom_logger import CustomLogger
 
@@ -37,7 +38,9 @@ def _handle_file_upload(request):
         uploaded_photo.owner_ref = User.objects.get(username=request.user)
         upload_form.save()
         img_url = os.path.join(os.path.dirname(settings.MEDIA_ROOT), uploaded_photo.image.url[1:])
-        return _query_image_info(img_url)
+        img_info = _query_image_info(img_url)
+        _save_image_info(uploaded_photo, img_info)
+        return img_info
 
 
 def _query_image_info(img_url):
@@ -52,8 +55,20 @@ def _query_image_info(img_url):
     return image_info
 
 
+def _save_image_info(photo, img_info):
+    photo_info = json.loads(img_info)
+    pi = PhotoInfo.objects.create(
+        caption=photo_info['description']['captions'][0]['text'],
+        tags=str(photo_info['description']['tags']),
+        raw_json=img_info,
+        width=photo_info['metadata']['width'],
+        height=photo_info['metadata']['height'],
+        format=photo_info['metadata']['format'].lower(),
+        photo_ref=photo)
+    pi.save()
+
+
 def _apply_face_rectangles_pillow(img_url, img_info):
-    import json
     from PIL import Image, ImageDraw
 
     im = Image.open(img_url)
