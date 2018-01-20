@@ -30,7 +30,16 @@ def index(request):
 
 
 def photo_detail(request, user_photo_id):
-    return HttpResponse("Detail view for photo %s" % user_photo_id)
+    user_photo = Photo.objects.get(pk=user_photo_id)
+    img_url = user_photo.image.url
+    filename, extension = os.path.splitext(img_url)
+    detail_photo_url = filename + "-detail" + extension
+    context = {'detail_photo_url': detail_photo_url, 'user_photo': user_photo}
+    return render(request, "ImgApp/detail.html", context)
+
+
+def delete_photo(request, user_photo_id):
+    pass
 
 
 def _handle_file_upload(request):

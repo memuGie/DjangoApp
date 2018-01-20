@@ -1,0 +1,13 @@
+{% extends 'ImgApp/base.html' %}
+{% block main_content %}
+    <div align="center">
+        <h2>{{user_photo.photoinfo.caption}}</h2>
+        <img src="{{detail_photo_url}}"/>
+        <hr>
+        <h3>{{user_photo.photoinfo.tags}}</h3>
+        <br/><br/>
+        <div>
+            {{user_photo.photoinfo.raw_json}}
+        </div>
+    </div>
+{% endblock %}
