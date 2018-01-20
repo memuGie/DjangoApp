@@ -6,6 +6,9 @@
         </div>
         <h2>{{user_photo.photoinfo.caption}}</h2>
         <img src="{{detail_photo_url}}"/>
+        <div align="center">
+            <a href={% url "imgapp:delete" user_photo.id %}>Delete</a>
+        </div>
         <hr>
         <h3>{{user_photo.photoinfo.tags}}</h3>
         <br/><br/>

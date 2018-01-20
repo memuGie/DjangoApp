@@ -3,7 +3,7 @@ import json
 import traceback
 
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 
 from .models import Photo, User, PhotoInfo, Face
@@ -19,13 +19,12 @@ def index(request):
         return HttpResponse("""Please <a href="login">login</a>...""")
 
     logger.info("User %s has logged in" % request.user)
-    img_info = ""
     if request.method == "POST":
-        img_info = _handle_file_upload(request)
+        _handle_file_upload(request)
     user_photos = Photo.objects.filter(
         owner_ref=User.objects.get(username=request.user)).order_by("upload_date").reverse()
     form = ImageUploadingForm()
-    context = {'user_photos': user_photos, 'form': form, 'image_info': img_info}
+    context = {'user_photos': user_photos, 'form': form}
 
     return render(request, "ImgApp/index.html", context)
 
@@ -40,8 +39,11 @@ def photo_detail(request, user_photo_id):
     return render(request, "ImgApp/detail.html", context)
 
 
-def delete_photo(request, user_photo_id):
-    pass
+@login_required
+def photo_delete(request, user_photo_id):
+    photo_to_delete = Photo.objects.get(pk=user_photo_id)
+    photo_to_delete.delete()
+    return HttpResponseRedirect("/ImgApp")
 
 
 def _handle_file_upload(request):
