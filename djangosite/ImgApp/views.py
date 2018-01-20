@@ -4,6 +4,7 @@ import traceback
 
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
 
 from .models import Photo, User, PhotoInfo, Face
 from .forms import ImageUploadingForm
@@ -29,6 +30,7 @@ def index(request):
     return render(request, "ImgApp/index.html", context)
 
 
+@login_required
 def photo_detail(request, user_photo_id):
     user_photo = Photo.objects.get(pk=user_photo_id)
     img_url = user_photo.image.url

@@ -1,6 +1,9 @@
 {% extends 'ImgApp/base.html' %}
 {% block main_content %}
     <div align="center">
+        <div>
+            <b><i>{{user_photo.owner_ref}}</i></b> on <i>{{user_photo.upload_date}}</i>
+        </div>
         <h2>{{user_photo.photoinfo.caption}}</h2>
         <img src="{{detail_photo_url}}"/>
         <hr>
