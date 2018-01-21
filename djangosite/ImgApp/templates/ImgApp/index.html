@@ -5,18 +5,32 @@
         {% include 'ImgApp/upload.html' %}
     </div>
     <hr>
-    <h1>User Photos</h1><br>
+    <h1 align="center">User Photos</h1><br>
     {% if user_photos %}
         {% for user_photo in user_photos %}
-            {% if forloop.counter0 == 0 or forloop.counter0|divisibleby:3 %}
+            {% if forloop.counter0 == 0 %}
                 <div class="row">
+                    <div class="col-sm-6 col-md-4">
+                        <div class="thumbnail">
+                            <img src="{{user_photo.image.url}}" title="{{user_photo.description}}" />
+                            <div class="caption">
+                                <h3>{{user_photo.description}}</h3>
+                                <p>{{user_photo.upload_date}}</p>
+                                <p>
+                                    <a href="{% url "imgapp:detail" user_photo.id %}" class="btn btn-primary" role="button">Details</a>
+                                    <a href="{% url "imgapp:delete" user_photo.id %}" class="btn btn-danger" role="button">Delete</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
             {% endif %}
+            {% if not forloop.counter0|divisibleby:3 %}
                 <div class="col-sm-6 col-md-4">
                     <div class="thumbnail">
                         <img src="{{user_photo.image.url}}" title="{{user_photo.description}}" />
                         <div class="caption">
                             <h3>{{user_photo.description}}</h3>
-                            <p></p>
+                            <p>{{user_photo.upload_date}}</p>
                             <p>
                                 <a href="{% url "imgapp:detail" user_photo.id %}" class="btn btn-primary" role="button">Details</a>
                                 <a href="{% url "imgapp:delete" user_photo.id %}" class="btn btn-danger" role="button">Delete</a>
@@ -24,10 +38,25 @@
                         </div>
                     </div>
                 </div>
-                {% if forloop.counter0 == 0 or forloop.counter0|divisibleby:3 %}
+            {% endif %}
+                {% if forloop.counter0 != 0 and forloop.counter0|divisibleby:3 %}
+                    </div><div class="row">
+                    <div class="col-sm-6 col-md-4">
+                        <div class="thumbnail">
+                            <img src="{{user_photo.image.url}}" title="{{user_photo.description}}" />
+                            <div class="caption">
+                                <h3>{{user_photo.description}}</h3>
+                                <p>{{user_photo.upload_date}}</p>
+                                <p>
+                                    <a href="{% url "imgapp:detail" user_photo.id %}" class="btn btn-primary" role="button">Details</a>
+                                    <a href="{% url "imgapp:delete" user_photo.id %}" class="btn btn-danger" role="button">Delete</a>
+                                </p>
+                            </div>
+                        </div>
                     </div>
                 {% endif %}
         {% endfor %}
+        </div>  <!-- class row -->
     {% else %}
         <h3 align="center">You don't have any pictures. Upload something...</h3>
     {% endif %}
