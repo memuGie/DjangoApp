@@ -31,7 +31,6 @@ class StatusTest(TestCase):
         resp = index(request)
 
         self.assertEqual(resp.status_code, 200)
-        self.assertTrue("Proud html index page!".encode() in resp.content)
 
 
 class ModelTests(TestCase):
@@ -40,11 +39,13 @@ class ModelTests(TestCase):
             username="Mick", email="mickey.mock@mm.ww", password=""
         )
         self._photo = Photo.objects.create(
-            name="test photo from Mallorca",
+            description="test photo from Mallorca",
             upload_date=timezone.now(),
             owner_ref=self._user,
             image=tempfile.NamedTemporaryFile(suffix=".jpg").name
         )
 
     def test_create_photo(self):
-        pass
+        self.assertEqual(self._photo.description, "test photo from Mallorca")
+        self.assertEqual(self._photo.owner_ref, self._user)
+        self.assertTrue(self._photo.image.url)
