@@ -3,16 +3,15 @@
     <div align="center">
         <div class="panel panel-success">
             <div class="panel-heading">
-                <h3 class="panel-title">Upload your picture...</h3>
+                <h3 class="panel-title">Upload your Photo</h3>
             </div>
             <br/>
             {% include 'ImgApp/upload.html' %}
         </div>
     </div>
-    <hr>
     <div class="panel panel-info">
         <div class="panel-heading">
-            <h3 align="center" class="panel-title">User Photos</h3><br>
+            <h3 align="center" class="panel-title">Your Photos</h3><br>
         </div>
     {% if user_photos %}
         {% for user_photo in user_photos %}

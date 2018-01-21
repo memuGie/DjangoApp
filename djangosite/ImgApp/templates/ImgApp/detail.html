@@ -4,7 +4,7 @@
         <div class="panel-heading">
             <p class="panel-title">
                 <b><i>{{user_photo.owner_ref}}</i></b> on <i>{{user_photo.upload_date}}</i>
-                <h2>{{user_photo.photoinfo.caption}}</h2>
+                <h3>{{user_photo.photoinfo.caption}}</h3>
             </p>
         </div>
         <img src="{{detail_photo_url}}"/>
@@ -17,15 +17,15 @@
         <div class="panel-heading" align="center">
             <p class="panel-title">
                 Tags:
-                <h3>{{user_photo.photoinfo.tags}}</h3>
+                <h4>{{user_photo.photoinfo.tags}}</h4>
             </p>
         </div>
         <br/><br/>
     </div>
     <div class="panel panel-info">
         <div align="center" class="panel-heading">
-            raw JSON response:<br/>
-            {{user_photo.photoinfo.raw_json}}
+            Whole Computer Vision API response<br/>
         </div>
+        {{user_photo.photoinfo.raw_json}}
     </div>
 {% endblock %}
