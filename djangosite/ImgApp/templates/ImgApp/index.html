@@ -1,25 +1,35 @@
 {% extends 'ImgApp/base.html' %}
 {% block main_content %}
     <div align="center">
-        <h2>Upload your picture...</h2>
-        {% include 'ImgApp/upload.html' %}
+        <div class="panel panel-success">
+            <div class="panel-heading">
+                <h3 class="panel-title">Upload your Photo</h3>
+            </div>
+            <br/>
+            {% include 'ImgApp/upload.html' %}
+        </div>
     </div>
-    <hr>
-    <h1>User Photos</h1><br>
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <h3 align="center" class="panel-title">Your Photos</h3><br>
+        </div>
     {% if user_photos %}
         {% for user_photo in user_photos %}
-            <div align="center">
-                <h2>{{user_photo.description}}</h2>
-                <h3>{{user_photo.upload_date}}</h3>
-                <div>
-                    <a href={% url "imgapp:detail" user_photo.id %}>
-                        <img src="{{user_photo.image.url}}" width="500px" height="500px" title="{{user_photo.description}}"/>
-                    </a>
-                </div>
-                <hr>
-            </div>
+            {% if forloop.counter0 == 0 %}
+                <div class="row">
+                {% include "ImgApp/thumbnail.html" %}
+            {% endif %}
+            {% if not forloop.counter0|divisibleby:3 %}
+                {% include "ImgApp/thumbnail.html" %}
+            {% endif %}
+                {% if forloop.counter0 != 0 and forloop.counter0|divisibleby:3 %}
+                    </div><div class="row">
+                    {% include "ImgApp/thumbnail.html" %}
+                {% endif %}
         {% endfor %}
+        </div>  <!-- class row -->
     {% else %}
         <h3 align="center">You don't have any pictures. Upload something...</h3>
     {% endif %}
+    </div>  <!-- panel panel-info -->
 {% endblock %}

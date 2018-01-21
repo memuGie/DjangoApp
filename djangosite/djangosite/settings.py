@@ -100,6 +100,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+
 # Logging
 LOGGING = {
     'version': 1,
@@ -131,6 +132,7 @@ LOGGING = {
         },
     },
 }
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
