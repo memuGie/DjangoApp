@@ -1,11 +1,19 @@
 {% extends 'ImgApp/base.html' %}
 {% block main_content %}
     <div align="center">
-        <h2>Upload your picture...</h2>
-        {% include 'ImgApp/upload.html' %}
+        <div class="panel panel-success">
+            <div class="panel-heading">
+                <h3 class="panel-title">Upload your picture...</h3>
+            </div>
+            <br/>
+            {% include 'ImgApp/upload.html' %}
+        </div>
     </div>
     <hr>
-    <h1 align="center">User Photos</h1><br>
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <h3 align="center" class="panel-title">User Photos</h3><br>
+        </div>
     {% if user_photos %}
         {% for user_photo in user_photos %}
             {% if forloop.counter0 == 0 %}
@@ -24,4 +32,5 @@
     {% else %}
         <h3 align="center">You don't have any pictures. Upload something...</h3>
     {% endif %}
+    </div>  <!-- panel panel-info -->
 {% endblock %}
