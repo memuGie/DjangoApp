@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 
 from .models import Photo, User
@@ -13,7 +13,7 @@ logger = CustomLogger.get_instance()
 
 def index(request):
     if not request.user.is_authenticated:
-        return HttpResponse("""Please <a href="login">login</a>...""")
+        return HttpResponseRedirect("/ImgApp/login")
     if request.method == "POST":
         view_functions.handle_file_upload(request)
     user_photos = Photo.objects.filter(
