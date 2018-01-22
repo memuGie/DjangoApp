@@ -24,7 +24,12 @@ def delete_file(file_url):
 
 def build_image_detail_path(img_url):
     filename, extension = os.path.splitext(img_url)
-    return filename + "-detail" + extension
+    detail_file = filename + "-detail" + extension
+    if os.path.exists(os.path.join(os.path.dirname(settings.MEDIA_ROOT), detail_file[1:])):
+        return detail_file
+    else:
+        logger.debug("File: %s doesn't exist, falling back to: %s" % (detail_file, img_url))
+        return img_url
 
 
 def handle_file_upload(request):
@@ -35,7 +40,10 @@ def handle_file_upload(request):
         upload_form.save()
         img_url = os.path.join(os.path.dirname(settings.MEDIA_ROOT), uploaded_photo.image.url[1:])
         img_info = _query_image_info(img_url)
-        _save_image_info(uploaded_photo, img_info)
+        try:
+            _save_image_info(uploaded_photo, img_info)
+        except:
+            logger.warning("Unable to save image info for image: %s. Info: %s" % (uploaded_photo.description, img_info))
         return img_info
 
 
