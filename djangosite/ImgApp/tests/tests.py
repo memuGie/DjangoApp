@@ -4,8 +4,8 @@ from django.utils import timezone
 from django.test import TestCase, RequestFactory
 from django.contrib.auth.models import AnonymousUser, User
 
-from .views import index
-from .models import Photo
+from ..views import index
+from ..models import Photo
 
 
 class StatusTest(TestCase):
@@ -21,8 +21,7 @@ class StatusTest(TestCase):
 
         resp = index(request)
 
-        self.assertEqual(resp.status_code, 200)
-        self.assertTrue("login".encode() in resp.content)
+        self.assertEqual(resp.status_code, 302)
 
     def test_index_user(self):
         request = self.factory.get('/index')
