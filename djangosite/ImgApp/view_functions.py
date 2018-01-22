@@ -13,13 +13,19 @@ logger = CustomLogger.get_instance()
 
 
 def delete_file(file_url):
-    image_url = os.path.join(os.path.dirname(settings.MEDIA_ROOT), file_url[1:])
+    image_url = build_media_root_path(file_url)
     try:
         os.remove(image_url)
     except Exception:
         logger.error("File [%s] could not be deleted.Exc:\n%s" % (image_url, traceback.format_exc()))
+        return False
     else:
         logger.debug("File [%s] has been deleted" % image_url)
+        return True
+
+
+def build_media_root_path(file_url):
+    return os.path.join(os.path.dirname(settings.MEDIA_ROOT), file_url[1:])
 
 
 def build_image_detail_path(img_url):
@@ -33,7 +39,7 @@ def handle_file_upload(request):
         uploaded_photo = upload_form.save(commit=False)
         uploaded_photo.owner_ref = User.objects.get(username=request.user)
         upload_form.save()
-        img_url = os.path.join(os.path.dirname(settings.MEDIA_ROOT), uploaded_photo.image.url[1:])
+        img_url = build_media_root_path(uploaded_photo.image.url)
         img_info = _query_image_info(img_url)
         _save_image_info(uploaded_photo, img_info)
         return img_info
