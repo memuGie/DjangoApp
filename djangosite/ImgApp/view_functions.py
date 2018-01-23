@@ -31,11 +31,7 @@ def build_media_root_path(file_url):
 def build_image_detail_path(img_url):
     filename, extension = os.path.splitext(img_url)
     detail_file = filename + "-detail" + extension
-    if os.path.exists(os.path.join(os.path.dirname(settings.MEDIA_ROOT), detail_file[1:])):
-        return detail_file
-    else:
-        logger.debug("File: %s doesn't exist, falling back to: %s" % (detail_file, img_url))
-        return img_url
+    return detail_file
 
 
 def handle_file_upload(post, files, user):
