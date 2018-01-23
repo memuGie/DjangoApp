@@ -38,11 +38,11 @@ def build_image_detail_path(img_url):
         return img_url
 
 
-def handle_file_upload(request):
-    upload_form = ImageUploadingForm(request.POST, request.FILES)
+def handle_file_upload(post, files, user):
+    upload_form = ImageUploadingForm(post, files)
     if upload_form.is_valid():
         uploaded_photo = upload_form.save(commit=False)
-        uploaded_photo.owner_ref = User.objects.get(username=request.user)
+        uploaded_photo.owner_ref = User.objects.get(username=user)
         upload_form.save()
         img_url = build_media_root_path(uploaded_photo.image.url)
         img_info = _query_image_info(img_url)
@@ -51,6 +51,8 @@ def handle_file_upload(request):
         except:
             logger.warning("Unable to save image info for image: %s. Info: %s" % (uploaded_photo.description, img_info))
         return img_info
+    else:
+        return None
 
 
 def _query_image_info(img_url):
@@ -123,6 +125,4 @@ def _apply_face_rectangles_pillow(img_url, img_info):
                 logger.error(traceback.format_exc())
                 continue
         else:
-            # Add the patch to the Axes
-            # ax.set_axis_off()
             im.save(build_image_detail_path(img_url))
