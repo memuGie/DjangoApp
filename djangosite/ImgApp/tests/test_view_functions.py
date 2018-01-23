@@ -4,6 +4,8 @@ from django.conf import settings
 from ..view_functions import *
 
 
+# TODO: get the UTs further refined
+
 class ViewFunctionsTest(TestCase):
 
     def setUp(self):
@@ -26,9 +28,5 @@ class ViewFunctionsTest(TestCase):
         self.assertFalse(delete_file(filename))
 
     def test_handle_file_upload(self):
-        pass
+        self.assertIsNone(handle_file_upload(None, None, None))
 
-    def test_query_image_info(self):
-        # access the protected method
-        # self.assertIsNone(_query_image_info("noimage.pong"), )
-        pass
