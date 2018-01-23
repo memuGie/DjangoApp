@@ -4,7 +4,7 @@ node() {
     }
 
     stage('Build project') {
-        sh 'dir'
+        println "Unfortunately no Linux machine available..."
     }
 
     stage('Run UT') {
