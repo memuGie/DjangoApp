@@ -13,13 +13,19 @@ logger = CustomLogger.get_instance()
 
 
 def delete_file(file_url):
-    image_url = os.path.join(os.path.dirname(settings.MEDIA_ROOT), file_url[1:])
+    image_url = build_media_root_path(file_url)
     try:
         os.remove(image_url)
     except Exception:
         logger.error("File [%s] could not be deleted.Exc:\n%s" % (image_url, traceback.format_exc()))
+        return False
     else:
         logger.debug("File [%s] has been deleted" % image_url)
+        return True
+
+
+def build_media_root_path(file_url):
+    return os.path.join(os.path.dirname(settings.MEDIA_ROOT), file_url[1:])
 
 
 def build_image_detail_path(img_url):
@@ -32,19 +38,21 @@ def build_image_detail_path(img_url):
         return img_url
 
 
-def handle_file_upload(request):
-    upload_form = ImageUploadingForm(request.POST, request.FILES)
+def handle_file_upload(post, files, user):
+    upload_form = ImageUploadingForm(post, files)
     if upload_form.is_valid():
         uploaded_photo = upload_form.save(commit=False)
-        uploaded_photo.owner_ref = User.objects.get(username=request.user)
+        uploaded_photo.owner_ref = User.objects.get(username=user)
         upload_form.save()
-        img_url = os.path.join(os.path.dirname(settings.MEDIA_ROOT), uploaded_photo.image.url[1:])
+        img_url = build_media_root_path(uploaded_photo.image.url)
         img_info = _query_image_info(img_url)
         try:
             _save_image_info(uploaded_photo, img_info)
         except:
             logger.warning("Unable to save image info for image: %s. Info: %s" % (uploaded_photo.description, img_info))
         return img_info
+    else:
+        return None
 
 
 def _query_image_info(img_url):
@@ -117,6 +125,4 @@ def _apply_face_rectangles_pillow(img_url, img_info):
                 logger.error(traceback.format_exc())
                 continue
         else:
-            # Add the patch to the Axes
-            # ax.set_axis_off()
             im.save(build_image_detail_path(img_url))

@@ -15,7 +15,7 @@ def index(request):
     if not request.user.is_authenticated:
         return HttpResponseRedirect("/ImgApp/login")
     if request.method == "POST":
-        view_functions.handle_file_upload(request)
+        view_functions.handle_file_upload(request.POST, request.FILES, request.user)
     user_photos = Photo.objects.filter(
         owner_ref=User.objects.get(username=request.user)).order_by("upload_date").reverse()
     form = ImageUploadingForm()

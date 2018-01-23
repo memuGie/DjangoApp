@@ -8,5 +8,7 @@ node() {
     }
 
     stage('Run UT') {
+        // sh 'python manage.py test ImgApp'
+        // test_reports is the directory to be used as Jenkins UT plugin input
     }
 }
