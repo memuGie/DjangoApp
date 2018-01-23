@@ -33,3 +33,7 @@
 ====== RUN THE SERVER ======
 7. Run: python manage.py runserver
   + In your browser, go to: http://127.0.0.1:8000/ImgApp
+
+====== LOG IN ======
+8. Log in with your created user credentials
+  + or if you use the local, provided db file: usr and usr12345 as the login data
