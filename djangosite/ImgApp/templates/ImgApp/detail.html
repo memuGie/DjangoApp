@@ -7,7 +7,7 @@
                 <h3>{{user_photo.photoinfo.caption}}</h3>
             </p>
         </div>
-        <img src="{{detail_photo_url}}"/>
+        <img src="{{detail_photo_url}}" style="height:50vh;"/>
         <div align="center">
             <a href={% url "imgapp:delete" user_photo.id %}>
                 <button type="button" class="btn btn-danger">Delete</button>
