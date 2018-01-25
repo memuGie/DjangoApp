@@ -1,0 +1,82 @@
+{
+  "categories": [
+    {
+      "name": "people_group",
+      "score": 0.25,
+      "detail": {
+        "celebrities": []
+      }
+    }
+  ],
+  "description": {
+    "tags": [
+      "person",
+      "outdoor",
+      "smiling",
+      "posing",
+      "camera",
+      "young",
+      "holding",
+      "boy",
+      "photo",
+      "man",
+      "wearing",
+      "girl",
+      "standing",
+      "woman",
+      "little",
+      "shirt",
+      "bench",
+      "wooden",
+      "white",
+      "table",
+      "water",
+      "suit",
+      "people"
+    ],
+    "captions": [
+      {
+        "text": "a person posing for the camera",
+        "confidence": 0.9897883802062437
+      }
+    ]
+  },
+  "requestId": "5cbbf526-d5c7-45c0-9102-6ab1bbbf0beb",
+  "metadata": {
+    "width": 1250,
+    "height": 650,
+    "format": "Jpeg"
+  },
+  "faces": [
+    {
+      "age": 45,
+      "gender": "Male",
+      "faceRectangle": {
+        "left": 553,
+        "top": 178,
+        "width": 273,
+        "height": 273
+      }
+    },
+    {
+      "age": 30,
+      "gender": "Female",
+      "faceRectangle": {
+        "left": 299,
+        "top": 261,
+        "width": 253,
+        "height": 253
+      }
+    }
+  ],
+  "color": {
+    "dominantColorForeground": "White",
+    "dominantColorBackground": "Grey",
+    "dominantColors": [
+      "Grey",
+      "White"
+    ],
+    "accentColor": "33201F",
+    "isBWImg": false
+  }
+}
