@@ -10,15 +10,6 @@ class Photo(models.Model):
         User, default=User.objects.get(username="root").pk, on_delete=models.DO_NOTHING)
     image = models.ImageField(upload_to="app_photos")
 
-    @staticmethod
-    def get_photo_by_id(photo_id):
-        return Photo.objects.get(pk=photo_id)
-
-    @staticmethod
-    def get_user_photos_latest_first(user):
-        return Photo.objects.filter(
-            owner_ref=User.objects.get(username=user)).order_by("upload_date").reverse()
-
 
 class PhotoInfo(models.Model):
     caption = models.CharField(max_length=200)
