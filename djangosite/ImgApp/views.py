@@ -16,8 +16,7 @@ def index(request):
         return HttpResponseRedirect("/ImgApp/login")
     if request.method == "POST":
         view_functions.handle_file_upload(request.POST, request.FILES, request.user)
-    user_photos = Photo.objects.filter(
-        owner_ref=User.objects.get(username=request.user)).order_by("upload_date").reverse()
+    user_photos = Photo.get_user_photos_latest_first(user=request.user)
     form = ImageUploadingForm()
     context = {'user_photos': user_photos, 'form': form}
 
@@ -26,7 +25,7 @@ def index(request):
 
 @login_required
 def photo_detail(request, user_photo_id):
-    user_photo = Photo.objects.get(pk=user_photo_id)
+    user_photo = Photo.get_photo_by_id(user_photo_id)
     img_url = user_photo.image.url
     detail_photo_url = view_functions.build_image_detail_path(img_url)
     context = {'detail_photo_url': detail_photo_url, 'user_photo': user_photo}
@@ -35,7 +34,7 @@ def photo_detail(request, user_photo_id):
 
 @login_required
 def photo_delete(request, user_photo_id):
-    photo_to_delete = Photo.objects.get(pk=user_photo_id)
+    photo_to_delete = Photo.get_photo_by_id(user_photo_id)
     photo_to_delete.delete()
     view_functions.delete_file(photo_to_delete.image.url)
     view_functions.delete_file(view_functions.build_image_detail_path(photo_to_delete.image.url))

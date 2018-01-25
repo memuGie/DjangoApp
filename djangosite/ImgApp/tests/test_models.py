@@ -55,6 +55,19 @@ class ModelTests(TestCase):
     def test_photo_photo_info(self):
         self.assertEqual(self._photo.photoinfo, self._photo_info)
 
+    def test_get_photo_by_id(self):
+        self.assertEqual(Photo.get_photo_by_id(1), self._photo)
+
+    def test_get_user_photos_latest_first(self):
+        photo2 = Photo.objects.create(
+            description="test photo2",
+            upload_date=timezone.now(),
+            owner_ref=self._user,
+            image=tempfile.NamedTemporaryFile(suffix=".jpg").name
+        )
+        self.assertEqual(Photo.get_user_photos_latest_first(self._user)[0], photo2)
+        self.assertEqual(Photo.get_user_photos_latest_first(self._user)[1], self._photo)
+
     def test_photo_info_attributes(self):
         self.assertEqual(self._photo_info.caption, "a photo taken on Mallorca")
         self.assertEqual(self._photo_info.tags, "['mallorca', 'people', 'posing', 'couple']")
